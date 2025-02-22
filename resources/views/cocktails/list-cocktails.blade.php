@@ -1,11 +1,23 @@
 @extends('layouts.app')
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/list-cocktails.css') }}">
+@endsection
+
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h1>Lista de cocteles por letra</h1>
-            <div id="cocktail-carousel" class="splide">
+            <div class="mb-3">
+                <!-- Botones de paginación por letra -->
+                <div class="btn-group" role="group" aria-label="Alphabet Pagination">
+                    @foreach(range('A', 'Z') as $letter)
+                        <button type="button" class="btn btn-secondary load-cocktails" data-letter="{{ $letter }}">{{ $letter }}</button>
+                    @endforeach
+                </div>
+            </div>
+            <div id="cocktail-carousel" class="splide" style="max-height: 400px;">
                 <div class="splide__track">
                     <ul class="splide__list" id="cocktail-list">
                         <!-- Los cócteles se cargarán aquí mediante jQuery -->
@@ -19,7 +31,7 @@
 <script>
     $(document).ready(function() {
         // Inicializar Splide
-        new Splide('#cocktail-carousel', {
+        var splide = new Splide('#cocktail-carousel', {
             type   : 'loop',
             perPage: 3,
             perMove: 1,
@@ -48,6 +60,7 @@
                                 </li>
                             `);
                         });
+                        splide.refresh();
                     } else {
                         $('#cocktail-list').append('<li class="splide__slide">No cocktails found.</li>');
                     }
@@ -55,8 +68,14 @@
             });
         }
 
-        // Cargar cócteles por la letra 'a' al inicio
-        loadCocktails('a');
+        // Cargar cócteles por la letra 'A' al inicio
+        loadCocktails('A');
+
+        // Evento para cargar cócteles por letra
+        $(document).on('click', '.load-cocktails', function() {
+            var letter = $(this).data('letter');
+            loadCocktails(letter);
+        });
 
         // Evento para guardar cóctel en la base de datos
         $(document).on('click', '.save-cocktail', function() {

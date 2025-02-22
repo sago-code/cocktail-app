@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Cocktails_List') }}</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
         
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">
@@ -13,6 +13,9 @@
 
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/list-cocktails.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/stored-cocktails.css') }}" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Scripts -->
@@ -27,6 +30,7 @@
                 color: white; /* Color del texto para mejor visibilidad */
             }
         </style>
+        @yield('styles')
     </head>
     <body class="antialiased">
         @auth

@@ -1,0 +1,13 @@
+body {
+    background-color: rgba(17, 24, 39, var(--tw-bg-opacity, 1));
+    color: white;
+}
+
+.table {
+    background-color: white;
+    color: black;
+}
+
+.table th, .table td {
+    color: black;
+}

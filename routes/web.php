@@ -25,7 +25,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/list-cocktails', [CocktailController::class, 'list'])->name('list-cocktails');
-    Route::get('/cocktails/stored', [CocktailController::class, 'stored'])->name('cocktails.stored');
+    Route::post('/cocktails', [CocktailController::class, 'store'])->name('cocktails.store');
+    Route::get('/cocktails/stored', [CocktailController::class, 'index'])->name('cocktails.stored');
+    Route::delete('/cocktails/{cocktail}', [CocktailController::class, 'destroy'])->name('cocktails.destroy');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
