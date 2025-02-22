@@ -2,7 +2,9 @@
 // filepath: /c:/Users/orjue/OneDrive/Documentos/Santiago/cocktail-app/app/Http/Controllers/CocktailController.php
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use App\Models\Cocktail;
 
 class CocktailController extends Controller
 {
@@ -14,7 +16,10 @@ class CocktailController extends Controller
 
     public function stored()
     {
-        // Lógica para mostrar los cocteles almacenados
-        return view('cocktails.stored-cocktails');
+        // Obtener los cócteles almacenados desde la base de datos
+        $cocktails = Cocktail::all();
+
+        // Pasar los cócteles a la vista
+        return view('cocktails.stored-cocktails', compact('cocktails'));
     }
 }
