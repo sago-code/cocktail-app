@@ -28,7 +28,7 @@ class CocktailController extends Controller
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'alcoholic' => 'required|string|max:255',
-            'image' => 'required|url',
+            'image' => 'required|string', // Asegurarse de que el campo image esté presente y sea un string
         ]);
 
         // Crear un nuevo cóctel en la base de datos
@@ -45,6 +45,32 @@ class CocktailController extends Controller
 
         // Redirigir a la lista de cócteles almacenados con un mensaje de éxito
         return redirect()->route('cocktails.stored')->with('success', 'Cóctel guardado exitosamente.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validar los datos del formulario
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'alcoholic' => 'required|string|max:255',
+            'image' => 'nullable|string', // Asegurarse de que el campo image sea un string
+        ]);
+
+        // Encontrar el cóctel por ID
+        $cocktail = Cocktail::findOrFail($id);
+
+        // Actualizar los datos del cóctel
+        $cocktail->name = $request->name;
+        $cocktail->category = $request->category;
+        $cocktail->alcoholic = $request->alcoholic;
+        if ($request->has('image')) {
+            $cocktail->image = $request->image;
+        }
+        $cocktail->save();
+
+        // Redirigir a la lista de cócteles almacenados con un mensaje de éxito
+        return redirect()->route('cocktails.stored')->with('success', 'Cóctel actualizado exitosamente.');
     }
 
     public function destroy(Cocktail $cocktail)

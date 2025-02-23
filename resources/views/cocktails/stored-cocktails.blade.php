@@ -48,31 +48,29 @@
                     <div id="contnt-edit{{ $cocktail->id }}" class="contnt-edit modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form method="POST">
+                                <form method="POST" action="{{ route('cocktails.update', $cocktail->id) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
                                     <h1>Actualizar cóctel</h1>
                                     <div class="mb-3">
-                                        <input type="file" id="fileInput" accept="image/*" value ="{{ $cocktail->image }}" onchange="mostrarPrevia(this)"/>
-                                        <img alt="Vista previa" src="{{ $cocktail->image }}" class="VistaImg">
+                                        <input type="file" id="fileInput{{ $cocktail->id }}" accept="image/*" onchange="convertirImagenBase64(this, {{ $cocktail->id }})"/>
+                                        <img id="imgPreview{{ $cocktail->id }}" alt="Vista previa" src="{{ $cocktail->image }}" class="VistaImg">
+                                        <input type="hidden" id="imageBase64{{ $cocktail->id }}" name="image" value="{{ $cocktail->image }}">
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="name" placeholder="name@example.com" name="name" value="{{ $cocktail->name }}" />
-                                        <label for="name" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="name{{ $cocktail->id }}" placeholder="name@example.com" name="name" value="{{ $cocktail->name }}" />
+                                        <label for="name{{ $cocktail->id }}" class="form-label">Nombre</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="category" placeholder="name@example.com" name="category" value="{{ $cocktail->category }}" />
-                                        <label for="category" class="form-label">Categoría</label>
+                                        <input type="text" class="form-control" id="category{{ $cocktail->id }}" placeholder="name@example.com" name="category" value="{{ $cocktail->category }}" />
+                                        <label for="category{{ $cocktail->id }}" class="form-label">Categoría</label>
                                     </div>
                                     <div class="form-floating">
-                                        <select class="form-select" id="alcoholic" aria-label="Floating label select example">
-                                            @if ($cocktail->name == 'Alcoholic')
-                                                <option selected disabled value="Alcoholic">Con alcohol</option>
-                                            @else
-                                                <option selected disabled value="Non alcoholic">Sin alcohol</option>
-                                            @endif
-                                            <option value="Alcoholic">Con alcohol</option>
-                                            <option value="Non alcoholic">Sin alcohol</option>
+                                        <select class="form-select" id="alcoholic{{ $cocktail->id }}" name="alcoholic" aria-label="Floating label select example">
+                                            <option value="Alcoholic" {{ $cocktail->alcoholic == 'Alcoholic' ? 'selected' : '' }}>Con alcohol</option>
+                                            <option value="Non alcoholic" {{ $cocktail->alcoholic == 'Non alcoholic' ? 'selected' : '' }}>Sin alcohol</option>
                                         </select>
-                                        <label class="form-check-label" for="alcoholic">
+                                        <label class="form-check-label" for="alcoholic{{ $cocktail->id }}">
                                             Alcohólico
                                         </label>
                                     </div>
@@ -112,15 +110,19 @@
         </div>
     </div>
     <script>
-        function mostrarPrevia(input) {
+        function convertirImagenBase64(input, id) {
             const file = input.files[0]; // Obtiene el archivo seleccionado
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     // Encuentra la imagen dentro del mismo div contenedor
-                    const img = input.parentNode.querySelector("img"); 
+                    const img = document.getElementById("imgPreview" + id); 
                     img.src = e.target.result;
                     img.style.display = "block"; // Muestra la imagen
+
+                    // Almacena la imagen en base64 en un campo oculto
+                    const imageBase64 = document.getElementById("imageBase64" + id);
+                    imageBase64.value = e.target.result;
                 }
                 reader.readAsDataURL(file); // Convierte el archivo a base64
             }
