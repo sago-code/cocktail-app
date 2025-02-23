@@ -11,13 +11,13 @@
             <h1>Lista de cocteles por letra</h1>
             <div class="mb-3">
                 <!-- Botones de paginación por letra -->
-                <div class="btn-group" role="group" aria-label="Alphabet Pagination">
+                <div class="button-group" role="group" aria-label="Alphabet Pagination">
                     @foreach(range('A', 'Z') as $letter)
                         <button type="button" class="btn btn-secondary load-cocktails" data-letter="{{ $letter }}">{{ $letter }}</button>
                     @endforeach
                 </div>
             </div>
-            <div id="cocktail-carousel" class="splide" style="max-height: 400px;">
+            <div id="cocktail-carousel" class="splide cocktail-carousel" style="max-height: 400px;">
                 <div class="splide__track">
                     <ul class="splide__list" id="cocktail-list">
                         <!-- Los cócteles se cargarán aquí mediante jQuery -->
@@ -32,9 +32,10 @@
     $(document).ready(function() {
         // Inicializar Splide
         var splide = new Splide('#cocktail-carousel', {
-            type   : 'loop',
-            perPage: 3,
-            perMove: 1,
+            "container": "#fixedWidth",
+            "fixedWidth": 300,
+            "swipeAngle": false,
+            "speed": 400
         }).mount();
 
         // Función para cargar cócteles por letra
@@ -54,7 +55,7 @@
                                             <h5 class="card-title">${drink.strDrink}</h5>
                                             <p class="card-text">Category: ${drink.strCategory}</p>
                                             <p class="card-text">Alcoholic: ${drink.strAlcoholic}</p>
-                                            <button class="btn btn-primary save-cocktail" data-drink='${JSON.stringify(drink)}'>Guardar</button>
+                                            <button class="btn btn-secondary save-cocktail" data-drink='${JSON.stringify(drink)}'>Guardar</button>
                                         </div>
                                     </div>
                                 </li>

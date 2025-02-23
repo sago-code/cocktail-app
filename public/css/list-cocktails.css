@@ -3,15 +3,57 @@ body {
     color: white;
 }
 
+.button-group {
+    display: inline-flex;
+    vertical-align: middle;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.button-group > .btn {
+    width: 45px;
+    margin: 2px;
+    border: 2px solid transparent;
+    transition: 500ms;
+}
+
+.button-group > .btn:hover {
+    background: transparent;
+    border: 2px solid transparent;
+    border-color: #6c757d;
+    box-shadow: 0px 0px 4px 1px white, 0px 0px 20px 9px #ffffff40;
+    transform: scale(1.02);
+    transition: 500ms;
+}
+
 .card {
-    max-height: 350px;
+    position: relative;
+    min-width: 0;
+    word-wrap: break-word;
+    background: linear-gradient(180deg, #ffffffab, #ffffffab, #ffffff8f, transparent);
+    background-clip: border-box;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    border: 0px;
+    transform: scale(0.9);
+    transition: 300ms;
+}
+
+.cocktail-carousel .is-active .card {
+    transform: scale(1);
+    transition: 300ms;
 }
 
 .card-img-top {
-    width: 100%;
-    height: 200px;
+    width: 200px;
+    aspect-ratio: 1;
     object-fit: contain;
-    background-color: #f8f9fa;
+    border-radius: 7px;
 }
 
 .card-body {
@@ -29,5 +71,61 @@ body {
 
 .card-text {
     margin-bottom: 0.2rem; /* Reducir el margen inferior para el texto */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
+.card .btn {
+    background: #4c278f;
+    transition: 500ms;
+    position: relative;
+    overflow: hidden;
+}
+
+.card .btn:hover {
+    transform: scale(1.1);
+    transition: 500ms;
+}
+
+.card .btn::before {
+    content: '';
+    position: absolute;
+    left: -115%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #fe9434, #ea2838, #c6007b, #5e09da);
+    transform: scale(1.4);
+    transition: 500ms;
+}
+
+.card .btn:focus::before {
+    content: '';
+    left: 200%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #fe9434, #ea2838, #c6007b, #5e09da);
+    transform: scale(1.4);
+    transition: 700ms;
+}
+
+.cocktail-carousel .splide__slide {
+    min-width: 300px !important;
+}
+
+.splide__arrow--prev {
+    left: -3em;
+}
+
+.splide__arrow--next {
+    right: -3em;
+}
+
+.splide__pagination {
+    bottom: -2em;
+    left: 0;
+    padding: 0 1em;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+}

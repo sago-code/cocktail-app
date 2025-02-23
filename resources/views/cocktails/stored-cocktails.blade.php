@@ -19,6 +19,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>Programador</td>
+                        <td>404</td>
+                        <td>quien yo?</td>
+                        <td>
+                            <form method="POST">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
                     @foreach($cocktails as $cocktail)
                     <tr>
                         <td>{{ $cocktail->name }}</td>
