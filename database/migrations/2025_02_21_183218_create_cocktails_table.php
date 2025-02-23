@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('category');
             $table->string('alcoholic');
-            $table->string('image')->nullable();
+            $table->longText('image')->nullable();
             $table->timestamps();
         });
     }

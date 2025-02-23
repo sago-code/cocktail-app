@@ -9,5 +9,5 @@ class Cocktail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category', 'alcoholic', 'thumbnail'];
+    protected $fillable = ['name', 'category', 'alcoholic', 'image'];
 }

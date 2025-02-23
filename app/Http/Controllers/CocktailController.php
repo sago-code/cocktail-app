@@ -1,5 +1,4 @@
 <?php
-// filepath: /c:/Users/orjue/OneDrive/Documentos/Santiago/cocktail-app/app/Http/Controllers/CocktailController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -33,12 +32,16 @@ class CocktailController extends Controller
         ]);
 
         // Crear un nuevo cóctel en la base de datos
-        Cocktail::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'alcoholic' => $request->alcoholic,
-            'image' => $request->image,
-        ]);
+        try {
+            Cocktail::create([
+                'name' => $request->name,
+                'category' => $request->category,
+                'alcoholic' => $request->alcoholic,
+                'image' => $request->image,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
 
         // Redirigir a la lista de cócteles almacenados con un mensaje de éxito
         return redirect()->route('cocktails.stored')->with('success', 'Cóctel guardado exitosamente.');

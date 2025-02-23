@@ -30,7 +30,7 @@
 
 <script>
     $(document).ready(function() {
-        // Inicializa Splide
+        // Inicializar Splide
         var splide = new Splide('#cocktail-carousel', {
             "container": "#fixedWidth",
             "fixedWidth": 300,
@@ -49,13 +49,17 @@
                         data.drinks.forEach(function(drink) {
                             $('#cocktail-list').append(`
                                 <li class="splide__slide">
-                                    <div class="card" style="width: 18rem;" data-name="${drink.strDrink}" data-category="${drink.strCategory}" data-alcoholic="${drink.strAlcoholic}" data-image="${drink.strDrinkThumb}">
+                                    <div class="card" style="width: 18rem;">
                                         <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${drink.strDrink}">
                                         <div class="card-body">
                                             <h5 class="card-title">${drink.strDrink}</h5>
                                             <p class="card-text">Category: ${drink.strCategory}</p>
                                             <p class="card-text">Alcoholic: ${drink.strAlcoholic}</p>
                                             <button class="btn btn-secondary save-cocktail">Guardar</button>
+                                            <input type="hidden" class="drink-name" value="${drink.strDrink}">
+                                            <input type="hidden" class="drink-category" value="${drink.strCategory}">
+                                            <input type="hidden" class="drink-alcoholic" value="${drink.strAlcoholic}">
+                                            <input type="hidden" class="drink-image" value="${drink.strDrinkThumb}">
                                         </div>
                                     </div>
                                 </li>
@@ -69,7 +73,7 @@
             });
         }
 
-        // Carga cócteles por la letra 'A' al inicio
+        // Cargar cócteles por la letra 'A' al inicio
         loadCocktails('A');
 
         // Evento para cargar cócteles por letra
@@ -82,10 +86,10 @@
         $(document).on('click', '.save-cocktail', function() {
             var card = $(this).closest('.card');
             var drink = {
-                strDrink: card.data('name'),
-                strCategory: card.data('category'),
-                strAlcoholic: card.data('alcoholic'),
-                strDrinkThumb: card.data('image')
+                strDrink: card.find('.drink-name').val(),
+                strCategory: card.find('.drink-category').val(),
+                strAlcoholic: card.find('.drink-alcoholic').val(),
+                strDrinkThumb: card.find('.drink-image').val()
             };
 
             $.ajax({
@@ -102,6 +106,7 @@
                     alert('Cóctel guardado exitosamente.');
                 },
                 error: function(xhr) {
+                    console.log(xhr.responseText); // Verificar el error en la consola
                     alert('Error al guardar el cóctel.');
                 }
             });
