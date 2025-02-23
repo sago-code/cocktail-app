@@ -49,7 +49,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form method="POST">
-                                    <h1>Actualizame esta</h1>
+                                    <h1>Actualizar cóctel</h1>
                                     <div class="mb-3">
                                         <input type="file" id="fileInput" accept="image/*" value ="{{ $cocktail->image }}" onchange="mostrarPrevia(this)"/>
                                         <img alt="Vista previa" src="{{ $cocktail->image }}" class="VistaImg">
