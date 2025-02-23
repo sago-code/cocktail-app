@@ -29,26 +29,38 @@ Esta aplicación permite gestionar una lista de cócteles, incluyendo la funcion
 
    ```sh
    git clone https://github.com/tu-usuario/cocktail-app.git
-   cd cocktail-app```
+   cd cocktail-app
 
 2. **Instalar dependencias de PHP con Composer**
+
+    ```sh
     composer install
 
 3. **Instalar dependencias de Node.js con npm**
+
+    ```sh
     npm install
 
 4. **Configurar el archivo .env**
+
     Por si no funciona el .env que ya tiene el proyecto. Copia el archivo .env.example a .env y configura las variables de entorno, especialmente la conexión a la base de datos.
 
+    ```sh
     cp .env.example .env
 
 5. **Generar la clave de la aplicación**
+
+    ```sh
     php artisan key:generate
 
 6. **Ejecutar las migraciones de la base de datos**
+
+    ```sh
     php artisan migrate
 
 7. **Ejecutar la aplicacion**
+
+    ```sh
     composer run dev
 
     La aplicación estara disponible en (http://localhost:8000)
