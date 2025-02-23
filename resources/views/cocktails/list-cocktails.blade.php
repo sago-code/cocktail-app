@@ -30,7 +30,7 @@
 
 <script>
     $(document).ready(function() {
-        // Inicializar Splide
+        // Inicializa Splide
         var splide = new Splide('#cocktail-carousel', {
             "container": "#fixedWidth",
             "fixedWidth": 300,
@@ -49,13 +49,13 @@
                         data.drinks.forEach(function(drink) {
                             $('#cocktail-list').append(`
                                 <li class="splide__slide">
-                                    <div class="card" style="width: 18rem;">
+                                    <div class="card" style="width: 18rem;" data-name="${drink.strDrink}" data-category="${drink.strCategory}" data-alcoholic="${drink.strAlcoholic}" data-image="${drink.strDrinkThumb}">
                                         <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${drink.strDrink}">
                                         <div class="card-body">
                                             <h5 class="card-title">${drink.strDrink}</h5>
                                             <p class="card-text">Category: ${drink.strCategory}</p>
                                             <p class="card-text">Alcoholic: ${drink.strAlcoholic}</p>
-                                            <button class="btn btn-secondary save-cocktail" data-drink='${JSON.stringify(drink)}'>Guardar</button>
+                                            <button class="btn btn-secondary save-cocktail">Guardar</button>
                                         </div>
                                     </div>
                                 </li>
@@ -69,7 +69,7 @@
             });
         }
 
-        // Cargar cócteles por la letra 'A' al inicio
+        // Carga cócteles por la letra 'A' al inicio
         loadCocktails('A');
 
         // Evento para cargar cócteles por letra
@@ -80,16 +80,29 @@
 
         // Evento para guardar cóctel en la base de datos
         $(document).on('click', '.save-cocktail', function() {
-            var drink = $(this).data('drink');
+            var card = $(this).closest('.card');
+            var drink = {
+                strDrink: card.data('name'),
+                strCategory: card.data('category'),
+                strAlcoholic: card.data('alcoholic'),
+                strDrinkThumb: card.data('image')
+            };
+
             $.ajax({
                 url: '{{ route("cocktails.store") }}',
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    drink: drink
+                    name: drink.strDrink,
+                    category: drink.strCategory,
+                    alcoholic: drink.strAlcoholic,
+                    image: drink.strDrinkThumb
                 },
                 success: function(response) {
                     alert('Cóctel guardado exitosamente.');
+                },
+                error: function(xhr) {
+                    alert('Error al guardar el cóctel.');
                 }
             });
         });
