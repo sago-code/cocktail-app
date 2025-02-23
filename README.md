@@ -62,5 +62,5 @@ Esta aplicación permite gestionar una lista de cócteles, incluyendo la funcion
 
     ```sh
     composer run dev
-
+    ```sh
     La aplicación estara disponible en (http://localhost:8000)
